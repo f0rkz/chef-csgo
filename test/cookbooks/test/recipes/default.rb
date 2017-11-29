@@ -4,4 +4,4 @@
 #
 # Copyright:: 2017, f0rkznet.net
 
-include_recipe 'chef-arkserver::default'
+include_recipe 'chef-csgo::default'
