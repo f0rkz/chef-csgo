@@ -1,0 +1,16 @@
+[Unit]
+Description=<%= @node['csgo']['gameserver']['configuration']['hostname'] %>
+Wants=network-online.target
+After=syslog.target network.target nss-lookup.target network-online.target
+
+[Service]
+WorkingDirectory=<%= @node['csgo']['install_dir'] %>/<%= @node['csgo']['appid'] %>
+ExecStartPre=<%= @node['steam']['steamcmd']['install_dir'] %>/steamcmd.sh +login anonymous +force_install_dir <%= @node['csgo']['install_dir'] %>/<%= @node['csgo']['appid'] %> +app_update <%= @node['csgo']['appid'] %> +quit
+ExecStart=<%= @node['csgo']['install_dir'] %>/<%= @node['csgo']['appid'] %>/srcds_run -game csgo -console -usercon +game_type <%= @node['csgo']['gameserver']['game_type'] %> +game_mode <%= @node['csgo']['gameserver']['game_mode'] %> <% if @node['csgo']['gameserver']['mapgroup'] %>+mapgroup <%= @node['csgo']['gameserver']['mapgroup'] %> <% end %>+map <%= @node['csgo']['gameserver']['startmap'] %>
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s INT $MAINPID
+User=<%= @node['steam']['user'] %>
+Group=<%= @node['steam']['user'] %>
+
+[Install]
+WantedBy=multi-user.target

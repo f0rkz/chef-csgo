@@ -1,0 +1,10 @@
+<% @node['csgo']['gameserver']['configuration'].each do |option, value| -%>
+<%= option %> <%= value %>
+<% end -%>
+
+<% @node['csgo']['gameserver']['exec'].each do |exe| -%>
+exec <%= exe %>
+<% end -%>
+
+writeid
+writeip
