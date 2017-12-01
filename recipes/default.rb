@@ -29,6 +29,7 @@ execute 'reload systemd' do
 end
 
 csgo_base_dir = node['csgo']['install_dir']
+csgo_app_dir = "#{csgo_base_dir}/#{node['csgo']['appid']}"
 
 user node['steam']['user'] do
   system true
@@ -54,6 +55,38 @@ steamcmd_app 'install csgo' do
   group node['steam']['user']
   appid node['csgo']['appid']
   action :nothing
+end
+
+if node['csgo']['metamod']['installed']
+  remote_file "#{Chef::Config[:file_cache_path]}/metamod.tar.gz" do
+    source node['csgo']['metamod']['url']
+    owner node['steam']['user']
+    group node['steam']['user']
+    notifies :run, 'execute[install metamod]', :immediately
+  end
+  execute 'install metamod' do
+    command <<-EOF
+    tar -zxf #{Chef::Config[:file_cache_path]}/metamod.tar.gz -C #{csgo_app_dir}
+    chown -R #{node['steam']['user']}:#{node['steam']['user']} #{csgo_app_dir}
+    EOF
+    action :nothing
+  end
+end
+
+if node['csgo']['sourcemod']['installed']
+  remote_file "#{Chef::Config[:file_cache_path]}/sourcemod.tar.gz" do
+    source node['csgo']['sourcemod']['url']
+    owner node['steam']['user']
+    group node['steam']['user']
+    notifies :run, 'execute[install metamod]', :immediately
+  end
+  execute 'install sourcemod' do
+    command <<-EOF
+    tar -zxf #{Chef::Config[:file_cache_path]}/sourcemod.tar.gz -C #{csgo_app_dir}
+    chown -R #{node['steam']['user']}:#{node['steam']['user']} #{csgo_app_dir}
+    EOF
+    action :nothing
+  end
 end
 
 template 'server cfg' do

@@ -21,6 +21,12 @@
 default['steam']['user'] = 'steam'
 default['steam']['steamcmd']['install_dir'] = '/opt/steam'
 
+default['csgo']['sourcemod']['installed'] = true
+default['csgo']['sourcemod']['url'] = 'https://sm.alliedmods.net/smdrop/1.8/sourcemod-1.8.0-git6036-linux.tar.gz'
+
+default['csgo']['metamod']['installed'] = true
+default['csgo']['metamod']['url'] = 'https://mms.alliedmods.net/mmsdrop/1.10/mmsource-1.10.7-git961-linux.tar.gz'
+
 default['csgo']['appid'] = '740'
 default['csgo']['install_dir'] = '/opt/csgo'
 
