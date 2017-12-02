@@ -9,6 +9,7 @@ chef_version '>= 12.1' if respond_to?(:chef_version)
 issues_url 'https://github.com/f0rkz/chef-csgo/issues'
 source_url 'https://github.com/f0rkz/chef-csgo'
 depends 'chef-steamcmd'
+depends 'chef-sourcemod'
 
 %w(ubuntu debian).each do |os|
   supports os

@@ -30,6 +30,9 @@ end
 
 csgo_base_dir = node['csgo']['install_dir']
 csgo_app_dir = "#{csgo_base_dir}/#{node['csgo']['appid']}"
+csgo_game_dir = "#{csgo_app_dir}/csgo"
+csgo_cfg_dir = "#{csgo_game_dir}/cfg"
+csgo_server_cfg = "#{csgo_cfg_dir}/server.cfg"
 
 user node['steam']['user'] do
   system true
@@ -57,40 +60,17 @@ steamcmd_app 'install csgo' do
   action :nothing
 end
 
-if node['csgo']['metamod']['installed']
-  remote_file "#{Chef::Config[:file_cache_path]}/metamod.tar.gz" do
-    source node['csgo']['metamod']['url']
-    owner node['steam']['user']
-    group node['steam']['user']
-    notifies :run, 'execute[install metamod]', :immediately
-  end
-  execute 'install metamod' do
-    command <<-EOF
-    tar -zxf #{Chef::Config[:file_cache_path]}/metamod.tar.gz -C #{csgo_app_dir}
-    chown -R #{node['steam']['user']}:#{node['steam']['user']} #{csgo_app_dir}
-    EOF
-    action :nothing
-  end
-end
-
 if node['csgo']['sourcemod']['installed']
-  remote_file "#{Chef::Config[:file_cache_path]}/sourcemod.tar.gz" do
-    source node['csgo']['sourcemod']['url']
-    owner node['steam']['user']
+  sourcemod 'install sourcemod' do
+    user node['steam']['user']
     group node['steam']['user']
-    notifies :run, 'execute[install metamod]', :immediately
-  end
-  execute 'install sourcemod' do
-    command <<-EOF
-    tar -zxf #{Chef::Config[:file_cache_path]}/sourcemod.tar.gz -C #{csgo_app_dir}
-    chown -R #{node['steam']['user']}:#{node['steam']['user']} #{csgo_app_dir}
-    EOF
-    action :nothing
+    install_game_dir csgo_game_dir
+    not_if { ::File.exists?("#{csgo_game_dir}/addons") }
   end
 end
 
 template 'server cfg' do
-  path "#{csgo_base_dir}/#{node['csgo']['appid']}/csgo/cfg/server.cfg"
+  path csgo_server_cfg
   source 'csgo/server.cfg.erb'
   owner node['steam']['user']
   group node['steam']['user']

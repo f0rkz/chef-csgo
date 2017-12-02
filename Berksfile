@@ -7,3 +7,4 @@ group :integration do
 end
 
 cookbook 'chef-steamcmd', '~> 0.2.0'
+cookbook 'chef-sourcemod', '~> 0.1.0'

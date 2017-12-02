@@ -10,6 +10,27 @@ describe file('/opt/steam/steamcmd.sh') do
   its('group') { should eq 'steam' }
 end
 
+describe directory('/opt/csgo/740') do
+  it { should exist }
+  it { should be_directory }
+  it { should be_owned_by 'steam' }
+  its('group') { should eq 'steam' }
+end
+
+describe directory('/opt/csgo/740/csgo') do
+  it { should exist }
+  it { should be_directory }
+  it { should be_owned_by 'steam' }
+  its('group') { should eq 'steam' }
+end
+
+describe directory('/opt/csgo/740/csgo/addons') do
+  it { should exist }
+  it { should be_directory }
+  it { should be_owned_by 'steam' }
+  its('group') { should eq 'steam' }
+end
+
 describe service('csgo') do
   it { should be_installed }
   it { should be_enabled }
