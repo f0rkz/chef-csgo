@@ -22,10 +22,6 @@ default['steam']['user'] = 'steam'
 default['steam']['steamcmd']['install_dir'] = '/opt/steam'
 
 default['sourcemod']['installed'] = true
-default['sourcemod']['url'] = 'https://sm.alliedmods.net/smdrop/1.8/sourcemod-1.8.0-git6036-linux.tar.gz'
-
-default['metamod']['installed'] = true
-default['metamod']['url'] = 'https://mms.alliedmods.net/mmsdrop/1.10/mmsource-1.10.7-git961-linux.tar.gz'
 
 default['sourcebans']['installed'] = true
 default['sourcebans']['url'] = 'https://github.com/sbpp/sourcebans-pp/releases/download/1.6.2/sourcebans-pp-1.6.2.plugin-only.zip'

@@ -60,7 +60,7 @@ steamcmd_app 'install csgo' do
   action :nothing
 end
 
-if node['csgo']['sourcemod']['installed']
+if node['sourcemod']['installed']
   sourcemod 'install sourcemod' do
     user node['steam']['user']
     group node['steam']['user']
