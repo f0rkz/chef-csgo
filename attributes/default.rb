@@ -49,11 +49,15 @@ default['csgo']['gameserver']['game_mode'] = 0
 # sv_setsteamaccount
 default['csgo']['gameserver']['steamaccount'] = ''
 
+default['csgo']['gameserver']['ip'] = '0.0.0.0'
+default['csgo']['gameserver']['port'] = 27015
+
 # server.cfg options
 default['csgo']['gameserver']['configuration'] = {
   hostname: "Chef CSGO Server",
   rcon_password: "changeme",
   sv_password: "",
+  sv_lan: 0,
   log: 'on',
   sv_logbans: 1,
   sv_logecho: 1,
